@@ -125,22 +125,20 @@ Then /^I should see "([^\"]*)"$/ do |text|
 end
 
 #
-# fixed bug, patch obtained from lightouse of cucumber
+# fixed bug
 # 
 # https://rspec.lighthouseapp.com/projects/16211/tickets/491-test-unit-within-webrat_steps-bug
 #
 
 Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
   within(selector) do |content|
-    t = contain(content)
-    assert t.matches?(text), t.failure_message
+    assert content.dom.inner_text.include?(text)
   end
 end
 
 Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
   within(selector) do |content|
-    t = contain(content)
-    assert !t.matches?(text), t.failure_message
+    assert_not content.dom.inner_text.include?(text)
   end
 end
 
