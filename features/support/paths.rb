@@ -10,6 +10,8 @@ module NavigationHelpers
     
     when /the home\s?page/
       '/'
+    when /contacts\spage/
+      '/contacts'
     
     # Add more mappings here.
     # Here is a more fancy example:

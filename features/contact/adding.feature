@@ -5,9 +5,12 @@ Feature: Add contacts
   
   Scenario: No contacts at all
     Given no contacts
-    When I visit contacts_path
-    Then I will see an empty table
-    And a link add contacts
+    When I am on contacts page
+    Then I should see "Firstname"
+    And I should see "Lastname"
+    And I should see "Email"
+    And I should see "Twitter"
+    And I should see "Add a contact" within "a"
   Scenario: A new contact
   Scenario: An existing contact
   Scenario: An existing contact with email taken
