@@ -124,11 +124,29 @@ Then /^I should see "([^\"]*)"$/ do |text|
   assert_contain text
 end
 
+#
+# fixed bug, patch obtained from lightouse of cucumber
+# 
+# https://rspec.lighthouseapp.com/projects/16211/tickets/491-test-unit-within-webrat_steps-bug
+#
+
 Then /^I should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
   within(selector) do |content|
-    assert content.include?(text)
+    t = contain(content)
+    assert t.matches?(text), t.failure_message
   end
 end
+
+Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
+  within(selector) do |content|
+    t = contain(content)
+    assert !t.matches?(text), t.failure_message
+  end
+end
+
+#
+# end fix
+#
 
 Then /^I should see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)
@@ -144,12 +162,6 @@ end
 
 Then /^I should not see "([^\"]*)"$/ do |text|
   assert_not_contain text
-end
-
-Then /^I should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
-  within(selector) do |content|
-    assert !content.include?(text)
-  end
 end
 
 Then /^I should not see \/([^\/]*)\/$/ do |regexp|
