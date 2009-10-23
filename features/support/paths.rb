@@ -12,6 +12,10 @@ module NavigationHelpers
       '/'
     when /contacts\spage/
       '/contacts'
+
+    when /new\scontact/
+      '/contacts/new'
+
     
     # Add more mappings here.
     # Here is a more fancy example:

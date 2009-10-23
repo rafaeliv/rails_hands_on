@@ -4,3 +4,6 @@ Given /^no contacts$/ do
   # pending
 end
 
+Then /^I should have a contact with "([^\"]*)" as "([^\"]*)"$/ do |value, attribute|
+  assert !Contact.find(:first, :conditions=> { attribute.to_sym => value }).nil?
+end
