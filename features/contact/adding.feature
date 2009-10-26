@@ -34,4 +34,9 @@ Feature: Add contacts
     And I should have a contact with "@pvisintin" as "twitter"
   Scenario: An existing contact
   Scenario: An existing contact with email taken
-
+    Given an existing contact with "peterpunk@mail.com" as "email"
+    And I am on new contact
+    When I fill in "contact[email]" with "peterpunk@mail.com"
+    And I press "save"
+    And I should see "Invalid Contact"
+    
