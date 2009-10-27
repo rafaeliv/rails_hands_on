@@ -1,0 +1,19 @@
+
+= error_messages_for :contact, :header_message => "Invalid Contact"
+
+%fieldset.col6
+  %legend Personal Information
+  %label First Name
+  = form.text_field :first_name, :size => 15, :class => "first-name"
+  %label Last Name
+  = form.text_field :last_name, :size => 15
+  %label Email
+  = form.text_field :email
+%fieldset.col6
+  %legend Social Information
+  %label Group
+  = form.select :group_id, Group.all.collect{|i| [i.name, i.id]}
+  %label Twitter
+  = form.text_field :twitter
+  = form.submit "save"
+

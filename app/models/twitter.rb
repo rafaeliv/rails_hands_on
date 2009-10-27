@@ -1,0 +1,3 @@
+class Twitter < Address
+
+end

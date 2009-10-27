@@ -1,0 +1,3 @@
+class Gtalk < Address
+
+end

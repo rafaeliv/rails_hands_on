@@ -1,0 +1,3 @@
+class jabber < Address
+  
+end
