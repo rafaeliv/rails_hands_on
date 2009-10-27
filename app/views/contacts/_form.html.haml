@@ -13,7 +13,17 @@
   %legend Social Information
   %label Group
   = form.select :group_id, Group.all.collect{|i| [i.name, i.id]}
-  %label Twitter
-  = form.text_field :twitter
+  
+  -form.fields_for :addresses do |addresses_form|
+    -debugger
+    %label Type
+    -if addresses_form.object.new_record?
+      = addresses_form.select :type, Address::AVAILABLE_TYPES
+    -else
+      = addresses_form.object.type
+
+    %label Name    
+    = addresses_form.text_field :name
+
   = form.submit "save"
 

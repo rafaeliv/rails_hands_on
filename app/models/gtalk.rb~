@@ -1,0 +1,3 @@
+class Gtalk < Address
+  validates_format_of :name, :with => "como no tenes email?"
+end

@@ -1,6 +1,5 @@
 class ContactsController < ApplicationController
   MIN_ADDRESSES = 3
-
   def shared
     @contact ||= Contact.find_by_signature(params[:contact_id] || params[:id])
     # es lo mismo que

@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   
-  map.resources :contacts
+  map.resources :contacts, :member => {:shared => :get}
 
   map.root :controller => 'contacts', :action => 'index'
   

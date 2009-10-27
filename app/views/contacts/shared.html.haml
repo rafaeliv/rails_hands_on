@@ -1,0 +1,13 @@
+%h1
+  = h @contact.full_name
+
+%h2
+  = h @contact.email
+
+%ul
+  -@contact.addresses.each do |address|
+    %li 
+      %label type
+      = address.type
+      %label address
+      = h address.name
