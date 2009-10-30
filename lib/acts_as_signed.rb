@@ -1,5 +1,5 @@
 require 'active_support'
- 
+
 module Peterpunk
   module ActsAsSigned
     # Provides the base functionality for acts_as_signed
@@ -13,19 +13,19 @@ module Peterpunk
       
       module Config
         #
-        # class User < ActiveRecord::Base
-        # acts_as_signed do |config|
-        #
-        # end
-        # end
+        #   class User < ActiveRecord::Base
+        #     acts_as_signed do |config|
+        # 
+        #     end
+        #   end
         #
         def acts_as_signed(&block)
           
           yield self if block_given?
           acts_as_signed_modules.each { |mod| include mod }
- 
+
         end
- 
+
         #
         # hooking modules borrowed from authlogic
         #
@@ -51,7 +51,7 @@ module Peterpunk
           rw_config(:signature_length, value, :signature_length)
         end
         alias_method :signature_length=, :signature_length
- 
+
         private
           def acts_as_signed_modules
             key = :acts_as_signed_modules
@@ -70,17 +70,17 @@ module Peterpunk
       module Methods
         def self.included(klass)
           klass.class_eval do
- 
+
             include InstanceMethods
             extend ClassMethods
- 
+
           end
         end
       end
- 
+
       # Class level methods
       module ClassMethods
-        #
+        # 
         # locates an id based on signature
         #
         def find_by_signature(secret)
@@ -90,15 +90,15 @@ module Peterpunk
           raise ActiveRecord::RecordNotFound if signature != self.sign(instance.id)
           instance
         end
- 
-        #
+
+        # 
         # generate a sign according to length and id
         #
         def sign(id, length=signature_length)
           Digest::SHA1.hexdigest([self, id, SECRET].join)[0, length]
         end
       end
- 
+
       # Instance level methods
       module InstanceMethods
         def signed_id
@@ -106,11 +106,11 @@ module Peterpunk
         end
       end
       
- 
+
     end
   end
 end
- 
+
 if defined?(::ActiveRecord)
   module ::ActiveRecord
     class Base

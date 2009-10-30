@@ -34,9 +34,12 @@
     fieldset
       :padding 1em
     .col6
-      +columns(6)
-      +prefix(1)
-      
+      +columns(6,12)
+      +prefix(2)
+    .bordered
+      :border solid 1px #ddd
+      :padding 0.5em
+    
 
   footer
     +full(12)
@@ -54,12 +57,10 @@
 /* @group COMPONENTS by type */
 
 
-
 /* @end */
 
 
 /* @group OVERRIDES by content */
-
 
 
 /* @end */

@@ -247,16 +247,20 @@ img {
       padding: 1em; }
     /* line 36, ../../../app/stylesheets/screen.sass */
     #page #content .col6 {
-      width: 47.541%;
+      width: 49.153%;
       display: inline;
       float: left;
-      margin-right: 1.639%;
-      padding-left: 8.197%; }
-  /* line 41, ../../../app/stylesheets/screen.sass */
+      margin-right: 1.695%;
+      padding-left: 16.393%; }
+    /* line 39, ../../../app/stylesheets/screen.sass */
+    #page #content .bordered {
+      border: solid 1px #ddd;
+      padding: 0.5em; }
+  /* line 44, ../../../app/stylesheets/screen.sass */
   #page footer {
     clear: both;
     display: block; }
-    /* line 45, ../../../app/stylesheets/screen.sass */
+    /* line 48, ../../../app/stylesheets/screen.sass */
     #page footer ul li {
       float: left;
       display: inline-block;

@@ -2,6 +2,5 @@
 module ApplicationHelper
   def devolve_el_chorizo(contact)
     contact.signed_id
-    #[contact.id.to_s,Contact.sign(contact.id)].join("-")
   end
 end

@@ -20,7 +20,7 @@
     -if addresses_form.object.new_record?
       = addresses_form.select :type, Address::AVAILABLE_TYPES
     -else
-      = object.type
+      = addresses_form.object.type
 
     %label Name    
     = addresses_form.text_field :name

@@ -1,23 +1,46 @@
 class ContactsController < ApplicationController
   MIN_ADDRESSES = 3
-
+  MIN_RELATIONSHIPS = 3
+  
+  # contacts_controller.rb
   def shared
     @contact ||= Contact.find_by_signature(params[:contact_id] || params[:id])
-    # es lo mismo que
-    #if @contact.nil?
-     #@contact = Contact.find_by_signature(params[:contact_id] || params[:id])
-    #end
   end
-
+  
+  def friends
+    @contacts = Contact.find(:all,:joins => [:relationships => :group], :conditions => ["groups.name = ?",'friends'])
+    render :action => 'index'
+  end
+  
   def index
-    @contacts = Contact.all(:limit=>10)
+    respond_to do |format|
+      format.html do
+        value = params[:search]
+        @contacts = search value
+        render :template => 'contacts/index'
+      end
+      format.json do
+        value = params[:value]
+        @contacts = search value
+        render :text => @contacts.map{ |c| c.email }.to_json
+      end
+    end
+    
+    
+    
+    
   end
 
+  
   def new
     @contact = Contact.new
     MIN_ADDRESSES.times do
       @contact.addresses.build
     end
+    MIN_RELATIONSHIPS.times do
+      @contact.relationships.build
+    end
+    
   end
   
   def create
@@ -26,7 +49,7 @@ class ContactsController < ApplicationController
       flash[:notice] = "Todo genial! #{@contact.first_name} salvado"
       redirect_to contacts_path
     else
-      (MIN_ADDRESSES - @contact.addresses.length).times do
+      (MIN_ADDRESSES - @contact.addresses.length).times  do
         @contact.addresses.build
       end
       render :action => 'new'
@@ -53,7 +76,11 @@ class ContactsController < ApplicationController
     @contact.destroy
     redirect_to contacts_path
   end
-    
-    
+  private
+  
+    def search(value)
+      conditions = ['contacts.email like ? ', "%#{value}%"] if value
+      Contact.all(:include => [:relationships => :group], :conditions=> conditions, :limit => 10)
+    end  
 
 end

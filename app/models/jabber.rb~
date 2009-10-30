@@ -1,3 +1,7 @@
-class jabber < Address
-  
+class Jabber < Address
+  befor_create :set_kind
+
+  def set_kind
+    self.kind = ON_LINE
+  end
 end

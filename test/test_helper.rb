@@ -1,9 +1,57 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
-require 'blueprints'
+require 'faker'
+require 'context'
+gem 'jnunemaker-matchy', '>= 0.4.0'
+require 'matchy'
+require 'redgreen'
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 
 class ActiveSupport::TestCase
+
+  custom_matcher :have do |receiver, matcher, args|
+    count = args[0]
+    something = matcher.msgs[0].name
+    actual = receiver.send(something).length
+    matcher.positive_msg = "Expected #{receiver} to have #{actual} #{something}, but found #{count} "
+    actual == count
+  end
+
+  custom_matcher :be_nil do |receiver, matcher, args|
+    matcher.positive_failure_message = "Expected #{receiver} to be nil but it wasn't"
+    matcher.negative_failure_message = "Expected #{receiver} not to be nil but it was"
+    receiver.nil?
+  end
+
+  custom_matcher :be_valid do |receiver, matcher, args|
+    matcher.positive_failure_message = "Expected to be valid but it was invalid #{receiver.errors.inspect}"
+    matcher.negative_failure_message = "Expected to be invalid but it was valid #{receiver.errors.inspect}"
+    receiver.valid?
+  end
+
+  custom_matcher :have_error_on do |receiver, matcher, args|
+    receiver.valid?
+
+    attribute = args[0]
+    expected_message = args[1]
+
+    if expected_message.nil?
+      matcher.positive_failure_message = "#{receiver} had no errors on #{attribute}"
+      matcher.negative_failure_message = "#{receiver} had errors on #{attribute} #{receiver.errors.inspect}"
+      !receiver.errors.on(attribute).blank?
+    else
+      actual = receiver.errors.on(attribute)
+      matcher.positive_failure_message = %Q(Expected error on #{attribute} to be "#{expected_message}" but was "#{actual}")
+      matcher.negative_failure_message = %Q(Expected error on #{attribute} not to be "#{expected_message}" but was "#{actual}")
+      actual == expected_message
+    end
+  end
+
+  #State.create!(:country => 'ar', :name => 'Buenos Aires')
+
+  # teset sham before each test
+  setup { Sham.reset }
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -33,7 +81,9 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
+  #fixtures :all
 
   # Add more helper methods to be used by all tests here...
 end
+
+
