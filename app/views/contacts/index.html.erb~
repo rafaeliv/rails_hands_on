@@ -4,13 +4,22 @@
   <div class="notice"><%= flash[:notice] %></div>
 <% end %>
 
+
+<% form_tag contacts_path, :method => :get do %> 
+  <fieldset class="col6">
+  <%= text_field_tag :search, "search", :id => 'search' %>
+  <%= submit_tag 'search' %>
+  </fieldset>
+<% end %>
+
 <table border="1">
   <thead>
     <tr>
 			<td>Firstname</td>
 			<td>Lastname</td>
 			<td>Email</td>
-		  <td>Share</td>
+			<td>Groups</td>
+			<td>Share</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -21,15 +30,17 @@
 			<td><%= h contact.first_name %></td>
 			<td><%= h contact.last_name %></td>
 			<td><%= h contact.email %></td>
-			<!-- <td><%= h shared_contact_url([contact.id.to_s,Contact.sign(contact.id)].join("-")) %></td> -->
-      <td><%= h shared_contact_url(devolve_el_chorizo(contact)) %></td>
-
+			<td>
+			  <%= h contact.groups.map{|g| g.name }.join(", ") %>
+			</td>
+			<td><%= shared_contact_url(devolve_el_chorizo(contact)) %></td>
 			<td><%= link_to "[ Edit ]", edit_contact_path(contact) %></td>
 			<td><%= link_to "[ Delete ]", contact_path(contact), :method => "delete", :confirm => "Seguro?" %></td>
 		</tr>
     <% end %>
 	</tbody>
 </table>
+<%= will_paginate @contacts %>
 
 <%= link_to "Add a contact", new_contact_path %>
 

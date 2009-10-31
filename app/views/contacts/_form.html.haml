@@ -9,6 +9,14 @@
   = form.text_field :last_name, :size => 15
   %label Email
   = form.text_field :email
+
+%fieldset.col6
+  %legend Documents
+  -form.fields_for :assets do |assets_form|
+    .bordered
+      %label comments
+      =assets_form.file_field :document
+
 %fieldset.col6
   %legend Social Information
   -form.fields_for :relationships do |relationships_form|

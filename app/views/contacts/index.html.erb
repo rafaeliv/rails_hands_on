@@ -19,7 +19,8 @@
 			<td>Lastname</td>
 			<td>Email</td>
 			<td>Groups</td>
-			<td>Share</td>
+      <td>Addresses</td>			
+      <td>Share</td>
 			<td></td>
 			<td></td>
 		</tr>
@@ -33,6 +34,7 @@
 			<td>
 			  <%= h contact.groups.map{|g| g.name }.join(", ") %>
 			</td>
+      <td><%= link_to "addresses", contact_addresses_path(contact) %></td>
 			<td><%= shared_contact_url(devolve_el_chorizo(contact)) %></td>
 			<td><%= link_to "[ Edit ]", edit_contact_path(contact) %></td>
 			<td><%= link_to "[ Delete ]", contact_path(contact), :method => "delete", :confirm => "Seguro?" %></td>
@@ -40,6 +42,7 @@
     <% end %>
 	</tbody>
 </table>
+<%= will_paginate @contacts %>
 
 <%= link_to "Add a contact", new_contact_path %>
 

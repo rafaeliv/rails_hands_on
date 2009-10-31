@@ -1,0 +1,4 @@
+<h1>Adresses#index</h1>
+<ul>
+<%= render partial 'address', :collection => @addresses %>
+</ul>

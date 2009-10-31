@@ -1,6 +1,6 @@
 <h1>Edit contact</h1>
 
-<% form_for @contact do |form| %>
+<% form_for @contact, :html=>{:multipart => true} do |form| %>
 
   <%= render :partial => 'form', :object => form %>
 

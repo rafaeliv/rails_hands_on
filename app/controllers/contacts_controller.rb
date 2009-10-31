@@ -40,7 +40,7 @@ class ContactsController < ApplicationController
     MIN_RELATIONSHIPS.times do
       @contact.relationships.build
     end
-    
+    @contact.assets.build
   end
   
   def create
@@ -80,7 +80,10 @@ class ContactsController < ApplicationController
   
     def search(value)
       conditions = ['contacts.email like ? ', "%#{value}%"] if value
-      Contact.all(:include => [:relationships => :group], :conditions=> conditions, :limit => 10)
+      Contact.paginate :page => params[:page], :per_page => 2, :order => 'created_at DESC', :include => [:relationships => :group], :conditions => conditions
+
+
+     # Contact.all(:include => [:relationships => :group], :conditions=> conditions, :limit => 10)
     end  
 
 end

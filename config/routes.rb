@@ -1,6 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  map.namespace :admin do |admin|
+    admin.resources :groups
+  end 
+
   
-  map.resources :contacts, :collection => { :friends => :get }, :member => { :shared => :get }
+  map.resources :contacts, :collection => { :friends => :get }, :member => { :shared => :get } do |contact|
+    contact.resources :addresses, :only => :index, :as => 'direcciones'
+  end
   
   map.root :controller => 'contacts', :action =>'index'
   

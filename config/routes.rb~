@@ -1,8 +1,25 @@
 ActionController::Routing::Routes.draw do |map|
-  
-  map.resources :contacts, :member => {:share => :get}
+  map.namespace :admin do |admin|
+    admin.resources :groups
+  end 
 
-  map.root :controller => 'contacts', :action => 'index'
+  
+  map.resources :contacts, :collection => { :friends => :get }, :member => { :shared => :get } do |contact|
+    contact.resources :addresses, :only => :index, :path_names => {:index => 'direcciones'}
+  end
+  
+  map.root :controller => 'contacts', :action =>'index'
+  
+  # sessions
+  map.resource :user_session
+
+  # users
+  map.resource :account, :controller => "users"
+  map.resources :users
+
+
+  # map.root :controller => "user_sessions", :action => "new" # optional, this just sets the root route
+  
   
   # The priority is based upon order of creation: first created -> highest priority.
 

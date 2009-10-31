@@ -1,0 +1,8 @@
+- if !current_user
+  = link_to 'login', new_user_session_path
+  |
+  = link_to 'signup', new_account_path
+
+- else
+  = link_to 'logout', user_session_path, :method => :delete, :confirm => 'are you sure to logout'
+

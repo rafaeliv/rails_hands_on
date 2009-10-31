@@ -1,2 +1,5 @@
 class Group < ActiveRecord::Base
+  has_many :contacts, :through => :relationships
+  has_many :relationships
+  has_one :asset, :as => :attachable
 end

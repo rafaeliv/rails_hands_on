@@ -6,7 +6,10 @@ class Contact < ActiveRecord::Base
   validates_presence_of :last_name
   validates_presence_of :email, :message => "como no tenes email?"
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  has_many :assets, :as => :attachable
 
+  accepts_nested_attributes_for :assets,
+    :reject_if => proc { |attributes| attributes['document_file_name'].blank?}
 
 
   # antes belongs_to :group
